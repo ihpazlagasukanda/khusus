@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Amanda & Asih - Jangan Sedih Ya!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffccd5, #c9f5ff);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ff4081;
+            text-shadow: 3px 3px 0 #ffeb3b;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff4081;
+            transform: rotate(45deg);
+            animation: float 5s linear infinite;
+        }
+
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff4081;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: -10px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Kontrol Musik */
+        .music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .music-btn {
+            background: #ff4081;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .music-btn:hover {
+            background: #e91e63;
+            transform: scale(1.1);
+        }
+
+        .music-info {
+            font-size: 0.9rem;
+            color: #333;
+            max-width: 150px;
+        }
+
+        .intro {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            border: 5px dashed #ff4081;
+        }
+
+        .profiles {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .profile {
+            background-color: white;
+            border-radius: 20px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            border: 5px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile:hover {
+            transform: scale(1.05);
+        }
+
+        .amanda {
+            border-color: #ff4081;
+        }
+
+        .asih {
+            border-color: #2196f3;
+        }
+
+        .profile-img-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 5px solid;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .amanda .profile-img-container {
+            border-color: #ff4081;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+        }
+
+        .asih .profile-img-container {
+            border-color: #2196f3;
+            background: linear-gradient(45deg, #a1c4fd, #c2e9fb);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .profile p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #ffeb3b;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
+
+        .memories {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 5px dotted #4caf50;
+        }
+
+        .memories h2 {
+            text-align: center;
+            color: #4caf50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .memory-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .memory-item {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .memory-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .memory-item h3 {
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+
+        .fun-section {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 5px double #9c27b0;
+        }
+
+        .fun-section h2 {
+            color: #9c27b0;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-joke {
+            background-color: #ffeb3b;
+            color: #333;
+        }
+
+        .btn-joke:hover {
+            background-color: #fbc02d;
+            transform: scale(1.05);
+        }
+
+        .btn-hug {
+            background-color: #ff4081;
+            color: white;
+        }
+
+        .btn-hug:hover {
+            background-color: #e91e63;
+            transform: scale(1.05);
+        }
+
+        .btn-dance {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn-dance:hover {
+            background-color: #388e3c;
+            transform: scale(1.05);
+        }
+
+        .btn-tiktok {
+            background-color: #000;
+            color: white;
+        }
+
+        .btn-tiktok:hover {
+            background-color: #333;
+            transform: scale(1.05);
+        }
+
+        .btn-game {
+            background-color: #9c27b0;
+            color: white;
+        }
+
+        .btn-game:hover {
+            background-color: #7b1fa2;
+            transform: scale(1.05);
+        }
+
+        .message-box {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #333;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dancing-cat {
+            font-size: 5rem;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .dancing {
+            display: block;
+            animation: dance 1s infinite;
+        }
+
+        @keyframes dance {
+            0%, 100% { transform: rotate(0); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .tiktok-video {
+            width: 300px;
+            height: 520px;
+            margin: 0 auto;
+            display: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .game-container {
+            width: 300px;
+            height: 200px;
+            background: #333;
+            border-radius: 10px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+
+        .player {
+            width: 30px;
+            height: 30px;
+            background: #4caf50;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 10px;
+            left: 50px;
+        }
+
+        .obstacle {
+            width: 20px;
+            height: 40px;
+            background: #ff4081;
+            position: absolute;
+            bottom: 10px;
+            right: -20px;
+        }
+
+        .goodbye {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 5px solid #ff9800;
+        }
+
+        .goodbye h2 {
+            color: #ff9800;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .goodbye p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2196f3;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: #1976d2;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .profiles {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .memory-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .music-controls {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+            }
+            
+            .music-info {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Kontrol Musik -->
+    <div class="music-controls">
+        <button class="music-btn" id="playBtn">▶️</button>
+        <button class="music-btn" id="pauseBtn">⏸️</button>
+        <div class="music-info" id="musicInfo">Musik: Lagu Ceria</div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>Untuk Amanda & Asih ❤️</h1>
+            <div class="hearts" id="hearts"></div>
+        </header>
+        
+        <section class="intro">
+            <p>Hai Amanda dan Asih! Aku tahu kalian sedih karena aku pindah ke Jakarta, tapi jangan khawatir! Kita tetap bisa berkomunikasi dan suatu hari pasti ketemu lagi. Website ini kubuat khusus untuk kalian biar kalian senyum terus!</p>
+        </section>
+        
+        <section class="profiles">
+            <div class="profile amanda">
+                <div class="profile-img-container">
+                    <img src="img/manda.JPG" alt="Amanda" class="profile-img">
+                </div>
+                <h3>Amanda</h3>
+                <p>Si Cengeng Tapi Ceria, Sipaling Trend TikTok!</p>
+                <div>
+                    <span class="tag">#Cengeng</span>
+                    <span class="tag">#Ceria</span>
+                    <span class="tag">#TikToker</span>
+                    <span class="tag">#SipalingTrend</span>
+                </div>
+            </div>
+            
+            <div class="profile asih">
+                <div class="profile-img-container">
+                    <img src="img/asih.JPG" alt="Asih" class="profile-img">
+                </div>
+                <h3>Asih</h3>
+                <p>Si Cool, Kecil-kecil Cabe Rawit, Gamer Sejati!</p>
+                <div>
+                    <span class="tag">#Cool</span>
+                    <span class="tag">#KecilKuat</span>
+                    <span class="tag">#Gamer</span>
+                    <span class="tag">#SipalingGame</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="memories">
+            <h2>Kenangan Seru Kita!</h2>
+            <div class="memory-list">
+                <div class="memory-item">
+                    <h3>Makan Siang Bareng</h3>
+                    <p>Ingat ya waktu kita selalu makan di ruang tamu, tempat yang jarang aku singgahi tapi ketika ada kalian aku pasti singgah situ</p>
+                </div>
+                <div class="memory-item">
+                    <h3>Ngajarin Kalian</h3>
+                    <p>Ga ngajarin sih lebih ke kakak yang belajar kalian tidur kalo ga ngobrol!</p>
+                </div>
+                <div class="memory-item">
+                    <h3>Foto-foto bareng</h3>
+                    <p>Kalian selalu ngajakin kakak foto, ayo mas foto padahal aku mah mau banget soalnya gada yang pernah ngajak foto hikss!</p>
+                </div>
+                <div class="memory-item">
+                    <h3>Ngobrol Santai</h3>
+                    <p>Waktu istirahat kita selalu ngobrol tentang random kalo ga ya tiktokan!</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="fun-section">
+            <h2>Yuk, Main-main Dulu!</h2>
+            <div class="buttons">
+                <button class="btn btn-joke" id="jokeBtn">Kasih Joke Lucu</button>
+                <button class="btn btn-hug" id="hugBtn">Kirim Virtual Hug</button>
+                <button class="btn btn-dance" id="danceBtn">Ayo Menari!</button>
+                <button class="btn btn-tiktok" id="tiktokBtn">Trend TikTok</button>
+                <button class="btn btn-game" id="gameBtn">Mini Game</button>
+            </div>
+            <div class="message-box" id="messageBox">
+                Klik tombol di atas untuk mulai bersenang-senang!
+            </div>
+            <div class="dancing-cat" id="dancingCat">🐱</div>
+            <div class="tiktok-video" id="tiktokVideo">
+                <!-- Ganti dengan embed code dari TikTok -->
+                <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@privrett/video/7551379920975416584" data-video-id="7551379920975416584" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@privrett" href="https://www.tiktok.com/@privrett?refer=embed">@privrett</a> <p>bagoyaangg🕺🏼💃🏻</p> <a target="_blank" title="♬ original sound  - joget viral" href="https://www.tiktok.com/music/original-sound-joget-viral-7549487489413565185?refer=embed">♬ original sound  - joget viral</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
+            </div>
+            <div class="game-container" id="gameContainer">
+                <div class="player" id="player"></div>
+            </div>
+        </section>
+        
+        <section class="goodbye">
+            <h2>Jangan Sedih Ya!</h2>
+            <p>Meski aku sekarang di Jakarta dan kalian di Yogyakarta, kita tetap teman baik selamanya! Jangan lupa kalian harus banyak belajar karena ada TKA yang harus diselesaikan dengan baik. Aku yakin kalian pasti bisa!</p>
+            <p>Ingat, aku selalu siap membantu kalian meski dari jauh. Jangan sungkan untuk menghubungi aku kalau ada yang perlu dibicarakan atau butuh bantuan.</p>
+            <p>Kita pasti akan ketemu lagi suatu hari nanti! Sampai jumpa, Amanda dan Asih! ❤️</p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">WhatsApp</a>
+                <a href="#" class="social-link">Instagram</a>
+                <a href="#" class="social-link">TikTok</a>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Dibuat dengan ❤️ oleh mas ipaz yang selalu rindu kalian</p>
+        </footer>
+    </div>
+
+    <!-- Elemen Audio -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-day-583.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <script>
+        // Kontrol Musik
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const musicInfo = document.getElementById('musicInfo');
+        
+        // Coba putar musik otomatis saat halaman dimuat
+        window.addEventListener('load', function() {
+            // Minta interaksi pengguna terlebih dahulu untuk autoplay
+            document.body.addEventListener('click', function() {
+                backgroundMusic.play().catch(e => {
+                    console.log("Autoplay diblokir:", e);
+                });
+            }, { once: true });
+        });
+        
+        playBtn.addEventListener('click', function() {
+            backgroundMusic.play();
+            musicInfo.textContent = "Musik: Diputar 🎵";
+        });
+        
+        pauseBtn.addEventListener('click', function() {
+            backgroundMusic.pause();
+            musicInfo.textContent = "Musik: Dijeda ⏸️";
+        });
+        
+        // Membuat hati berjatuhan
+        const heartsContainer = document.getElementById('hearts');
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            // Posisi acak
+            const left = Math.random() * 100;
+            heart.style.left = `${left}%`;
+            
+            // Warna acak
+            const colors = ['#ff4081', '#ff9800', '#4caf50', '#2196f3', '#9c27b0'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.backgroundColor = color;
+            heart.style.setProperty('--heart-color', color);
+            
+            // Ukuran acak
+            const size = Math.random() * 20 + 10;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            
+            // Durasi animasi acak
+            const duration = Math.random() * 5 + 5;
+            heart.style.animationDuration = `${duration}s`;
+            
+            heartsContainer.appendChild(heart);
+            
+            // Hapus hati setelah animasi selesai
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+        
+        // Buat hati setiap 300ms
+        setInterval(createHeart, 300);
+        
+        // Tombol interaktif
+        const jokeBtn = document.getElementById('jokeBtn');
+        const hugBtn = document.getElementById('hugBtn');
+        const danceBtn = document.getElementById('danceBtn');
+        const tiktokBtn = document.getElementById('tiktokBtn');
+        const gameBtn = document.getElementById('gameBtn');
+        const messageBox = document.getElementById('messageBox');
+        const dancingCat = document.getElementById('dancingCat');
+        const tiktokVideo = document.getElementById('tiktokVideo');
+        const gameContainer = document.getElementById('gameContainer');
+        const player = document.getElementById('player');
+        
+        const jokes = [
+            "Kenapa ayam tidak bisa main game? Karena dia cuma punya 'telor'! 😂",
+            "Apa bedanya hantu sama orang Indonesia? Hantu takut sama menteri, orang Indonesia takut sama hantu! 👻",
+            "Kenapa programmer tidak suka alam? Karena sering dapat bug! 🐛",
+            "Apa yang dikatakan kucing ketika bertemu tikus? 'Meow-ment of truth!' 🐱",
+            "Kenapa Amanda dan Asih tidak pernah kalah lomba lari? Karena mereka selalu 'Asih' duluan! 🏃‍♀️"
+        ];
+        
+        const hugs = [
+            "🤗 Virtual hug untuk Amanda dan Asih! Jangan sedih ya!",
+            "🫂 Pelukan hangat dari jauh! Kalian yang terbaik!",
+            "💝 Aku kirim pelukan virtual nih! Terima ya!",
+            "❤️ Pelukan buat kalian berdua! Tetap semangat!",
+            "🤱 Pelukan ibu-ibu buat Amanda dan Asih! Jangan sedih-sedih!"
+        ];
+        
+        const tiktokTrends = [
+            "🕺 Ayo ikutin trend TikTok yang lagi viral!",
+            "🎵 Joget-joget biar happy kayak di TikTok!",
+            "📱 Amanda pasti tahu nih trend yang lagi hits!",
+            "💃 Ayo buat video TikTok bareng-bareng!",
+            "🌟 Ini nih trend TikTok yang Amanda suka!"
+        ];
+        
+        jokeBtn.addEventListener('click', () => {
+            const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+            messageBox.textContent = randomJoke;
+            messageBox.style.color = "#ff4081";
+            hideAllSpecial();
+        });
+        
+        hugBtn.addEventListener('click', () => {
+            const randomHug = hugs[Math.floor(Math.random() * hugs.length)];
+            messageBox.textContent = randomHug;
+            messageBox.style.color = "#2196f3";
+            hideAllSpecial();
+            
+            // Buat hati khusus untuk pelukan
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    createHeart();
+                }, i * 200);
+            }
+        });
+        
+        danceBtn.addEventListener('click', () => {
+            messageBox.textContent = "Ayo menari bersama! Jangan lupa senyum! 😄";
+            messageBox.style.color = "#4caf50";
+            hideAllSpecial();
+            
+            // Tampilkan kucing menari
+            dancingCat.style.display = 'block';
+            dancingCat.classList.add('dancing');
+            
+            // Hentikan setelah 5 detik
+            setTimeout(() => {
+                dancingCat.classList.remove('dancing');
+                dancingCat.style.display = 'none';
+            }, 5000);
+        });
+        
+        tiktokBtn.addEventListener('click', () => {
+            const randomTrend = tiktokTrends[Math.floor(Math.random() * tiktokTrends.length)];
+            messageBox.textContent = randomTrend;
+            messageBox.style.color = "#000";
+            hideAllSpecial();
+            
+            // Tampilkan video TikTok
+            tiktokVideo.style.display = 'block';
+            
+            // Muat ulang script embed
+            if (typeof TikTokEmbed !== 'undefined') {
+                TikTokEmbed.load();
+            }
+            
+            // Sembunyikan setelah 10 detik
+            setTimeout(() => {
+                tiktokVideo.style.display = 'none';
+            }, 10000);
+        });
+        
+        gameBtn.addEventListener('click', () => {
+            messageBox.textContent = "Asih pasti jago nih main game! Tekan SPACE untuk lompat!";
+            messageBox.style.color = "#9c27b0";
+            hideAllSpecial();
+            
+            // Tampilkan game sederhana
+            gameContainer.style.display = 'block';
+            startMiniGame();
+        });
+        
+        function hideAllSpecial() {
+            dancingCat.style.display = 'none';
+            dancingCat.classList.remove('dancing');
+            tiktokVideo.style.display = 'none';
+            gameContainer.style.display = 'none';
+        }
+        
+        // Mini game sederhana
+        function startMiniGame() {
+            let isJumping = false;
+            let position = 50;
+            
+            document.addEventListener('keydown', function(event) {
+                if (event.code === 'Space' && !isJumping) {
+                    isJumping = true;
+                    let jumpCount = 0;
+                    
+                    const jumpInterval = setInterval(() => {
+                        if (jumpCount < 15) {
+                            position += 5;
+                            player.style.bottom = position + 'px';
+                            jumpCount++;
+                        } else if (jumpCount < 30) {
+                            position -= 5;
+                            player.style.bottom = position + 'px';
+                            jumpCount++;
+                        } else {
+                            clearInterval(jumpInterval);
+                            isJumping = false;
+                        }
+                    }, 30);
+                }
+            });
+            
+            // Buat obstacle
+            const obstacle = document.createElement('div');
+            obstacle.classList.add('obstacle');
+            gameContainer.appendChild(obstacle);
+            
+            let obstaclePosition = 300;
+            obstacle.style.right = obstaclePosition + 'px';
+            
+            const obstacleInterval = setInterval(() => {
+                obstaclePosition -= 5;
+                obstacle.style.right = obstaclePosition + 'px';
+                
+                if (obstaclePosition < -20) {
+                    obstaclePosition = 300;
+                }
+                
+                // Deteksi tabrakan
+                if (obstaclePosition > 20 && obstaclePosition < 80 && position < 70) {
+                    messageBox.textContent = "Wah kena rintangan! Coba lagi!";
+                    obstaclePosition = 300;
+                }
+            }, 50);
+            
+            // Hentikan game setelah 15 detik
+            setTimeout(() => {
+                clearInterval(obstacleInterval);
+                gameContainer.style.display = 'none';
+                messageBox.textContent = "Seru banget main game sama Asih!";
+            }, 15000);
+        }
+        
+        // Efek ketik untuk intro
+        const introText = "Hai Amanda dan Asih! Aku tahu kalian sedih karena aku pindah ke Jakarta, tapi jangan khawatir! Kita tetap bisa berkomunikasi dan suatu hari pasti ketemu lagi. Website ini kubuat khusus untuk kalian biar kalian senyum terus!";
+        const introElement = document.querySelector('.intro p');
+        let introIndex = 0;
+        
+        function typeIntro() {
+            if (introIndex < introText.length) {
+                introElement.textContent += introText.charAt(introIndex);
+                introIndex++;
+                setTimeout(typeIntro, 50);
+            }
+        }
+        
+        // Mulai efek ketik setelah halaman dimuat
+        window.addEventListener('load', () => {
+            introElement.textContent = "";
+            typeIntro();
+        });
+    </script>
+</body>
+</html>
